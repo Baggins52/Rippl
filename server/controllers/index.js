@@ -12,9 +12,10 @@ module.exports = {
   getAnalysis: function(req, res, next) {
     // Using hardcoded twitter handle for testing purposes, default currently pulls 5 most recent tweets
     var twitterHandle = req.query.handle || 'TweetsByTutt';
+    console.log('twitterHandle -------------------', twitterHandle);
     var currentUser = req.params.user || 'RipplMaster';
     var globaldata, globaltweetData, globalsentiment, globaluser;
-    
+
     getTweetsAsync(twitterHandle)
     .spread((data, response) => {
       globaldata = data;
@@ -30,6 +31,7 @@ module.exports = {
     })
     .then(function(user) {
       console.log('CREATING SCORE');
+      console.log(user, '---------------------');
       return Score.create({twitterHandle: twitterHandle,
         numTweets: globaldata.length,
         tweetText: globaltweetData.string,

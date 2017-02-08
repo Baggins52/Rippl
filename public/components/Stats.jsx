@@ -34,7 +34,7 @@ class Stats extends React.Component{
         console.log('success! ' + {data});
         that.setState({list: data.reverse(), spinner: false, error: false});
       },
-      error: function(err){ 
+      error: function(err){
         that.setState({spinner: false, error: true});
         console.log(err);
         console.log('didnt work');
@@ -50,6 +50,7 @@ class Stats extends React.Component{
 
   // Handles changes in the input tag
   handleChange(event) {
+    console.log('53', event.target.value);
     this.setState({query: event.target.value});
   }
 

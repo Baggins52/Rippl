@@ -10,7 +10,6 @@
     "login": "mysql -u root -p",
     "twitterscript": "node server/spec/twitterScript.js",
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "watch": "babel . --out-dir compiled --presets=es2015,react --ignore=node_modules,compiled --source-maps inline",
     "dev-react": "webpack -d --watch"
   },
   "repository": {
@@ -24,7 +23,7 @@
   },
   "homepage": "https://github.com/teamPupAndSuds/teamPupAndSuds#readme",
   "dependencies": {
-    "auth0-lock": "^10.10.2",
+    "auth0-lock": "^10.11.0",
     "axios": "^0.15.3",
     "babel-core": "^6.7.7",
     "babel-loader": "^6.2.10",
