@@ -18,7 +18,9 @@ var User = db.define('User', {
 });
 
 var Score = db.define('Score', {
-  twitterHandle: Sequelize.STRING,
+  value: Sequelize.STRING,
+  category: Sequelize.STRING,
+  //twitterHandle: Sequelize.STRING,
   numTweets: Sequelize.INTEGER,
   tweetText: Sequelize.TEXT,
   sentimentScore: Sequelize.FLOAT,
