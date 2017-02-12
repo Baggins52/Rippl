@@ -1,5 +1,4 @@
 // Utility functions for pulling messages from twitter API
-var request = require('request');
 var axios = require('axios');
 var twitterAccessTokens = require('../config/twitter.js');
 var Promise = require('bluebird');

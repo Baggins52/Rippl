@@ -42,6 +42,7 @@ bower_components/
 server/config/twitter.js
 server/config/haven.js
 server/config/auth0config.js
+server/config/google.js
 
 # Bundle #
 public/styles/bundle.js

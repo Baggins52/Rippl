@@ -1,5 +1,4 @@
 // Utility functions for sending twitter info through Haven On Demand API
-var request = require('request');
 var havenAPIKey = require('../config/haven.js');
 var Promise = require('bluebird');
 var axios = require('axios');

@@ -10,7 +10,7 @@ class Stats extends React.Component{
 
     this.state = {
       query: '', //entered text
-      // location: '33.517269,-86.808293,10km',
+      // location: '33.517269,-86.808293',
       queryType: 'twitterHandle', //twitterHandle, topic, or location
       location: undefined,
       list: [],
@@ -25,7 +25,6 @@ class Stats extends React.Component{
     this.queryHandle = this.queryHandle.bind(this);
     this.handleQueryType = this.handleQueryType.bind(this);
     this.queryTopic = this.queryTopic.bind(this);
-    this.queryLocation = this.queryLocation.bind(this);
   }
 
   // This function gets all the user data for user RipplMaster (default user),
@@ -48,6 +47,25 @@ class Stats extends React.Component{
         console.log(err);
       }
     });
+  }
+
+  //converts location name to GPS coordinate string
+  geoCode(callback){
+    $.ajax({
+      method: 'GET',
+      url: 'https://maps.googleapis.com/maps/api/geocode/json?address=' + this.state.query,
+      dataType: 'json',
+      success: function(data) {
+        console.log('geoCode success');
+        var coordinates = data.results[0].geometry.location
+        var coordinateString = coordinates.lat + ',' + coordinates.lng;
+        console.log(coordinateString)
+        callback(coordinateString);
+      },
+      error: function(err) {
+        console.error('geoCode error');
+      }
+    })
   }
 
 
@@ -115,38 +133,40 @@ class Stats extends React.Component{
     this.setState({spinner: true, error: false});
     var clientUserName = JSON.parse(window.localStorage.profile).screen_name;
     var context = this;
-    var query = {
-      clientUserName: clientUserName,
-    };
-    if (this.state.queryType === 'location') {
-      query['location'] = this.state.query,
-      query['topic'] = this.state.conditionalQuery
-    } else {
-      query['topic'] = this.state.query
-    }
-    console.log('inside queryTopic ---------------')
-    console.log(query);
-    this.setState({query: ''});
-    $.ajax({
-      method: 'GET',
-      url: 'http://localhost:3000/analyzeTopic',
-      dataType: 'json',
-      data: query,
-      success: function(data){
-        console.log('queryTopic successful');
-        context.getData();
-      },
-      error: function(err){
-        context.setState({spinner: false, error: true});
-        console.log(err);
+    this.geoCode(function(geoString) { 
+      console.log(JSON.parse(window.localStorage.profile).screen_name)
+      context.setState({spinner: true, error: false});
+      var clientUserName = JSON.parse(window.localStorage.profile).screen_name;
+      var query = {
+        clientUserName: clientUserName,
+      };
+      if (context.state.queryType === 'location') {
+        query['location'] = context.state.query,
+        query['topic'] = context.state.conditionalQuery,
+        query['coordinates'] = geoString,
+        console.log('location')
+        console.log(query);
+      } else {
+        query['topic'] = context.state.query
       }
+      console.log('inside queryTopic ---------------')
+      console.log(query);
+      context.setState({query: ''});
+      $.ajax({
+        method: 'GET',
+        url: 'http://localhost:3000/analyzeTopic',
+        dataType: 'json',
+        data: query,
+        success: function(data){
+          console.log('queryTopic successful');
+          context.getData();
+        },
+        error: function(err){
+          context.setState({spinner: false, error: true});
+          console.log(err);
+        }
+      });
     });
-  }
-
-  // Ajax request to the server to get the data for the specificed LOCATION,
-  // Also starts the spinner animation, and if there is an error, displays an error message.
-  queryLocation() {
-
   }
 
   logState() {
@@ -168,8 +188,7 @@ class Stats extends React.Component{
           conditionalFormChange={this.handleConditionalInputChange}
           handleSearchTypeChange={this.handleSearchTypeChange}
         />
-        <button onClick={this.logState.bind(this)}>console.log(state)</button>
-        <StatsBody
+        <StatsBody 
           list={this.state.list}
         />
         <StatsFoot />
