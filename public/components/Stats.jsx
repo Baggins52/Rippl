@@ -93,11 +93,9 @@ class Stats extends React.Component{
 
   // Acts as a switch for which query type to call based on the `queryType` state variable
   handleQueryType() {
-    if (this.state.queryType === 'twitterHandle') {
-      this.queryHandle();
-    } else {
-      this.queryTopic();
-    }
+    return this.state.queryType === 'twitterHandle'
+      ? this.queryHandle()
+      : this.queryTopic();
   }
 
   // Ajax request to the server to get the data for the specified TWITTERHANDLE,

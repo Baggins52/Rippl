@@ -27,22 +27,23 @@ class StatsNav extends React.Component{
     this.setState({'selected': event.target.value});
   }
 
+  handleErrorMessage() {
+    if (this.state.selected === 'twitterHandle') {
+      return 'No Such Twitter Handle Found';
+    } else if (this.state.selected === 'topic') {
+      return 'No Such Topic Found'
+    } else {
+      return 'No Such Topic And/Or Location Found'
+    }
+  }
+
   // Handles click on Get User Button
   handleClick() {
     console.log('click handler in StatsNav')
     var clientUserName = JSON.parse(window.localStorage.profile).screen_name;
-    // KG: send with JSON.parse(window.localStorage.profile).screen_name;
     this.props.getUserClick(clientUserName);
   }
-
-
-  handleImgClick() {
-    window.location =
-    'https://twitter.com/' +
-    JSON.parse(window.localStorage.profile).screen_name;
-
-  }
-
+  
   render(){
   	return(
   	  <Navbar right>
@@ -57,14 +58,18 @@ class StatsNav extends React.Component{
                     'top':'50%',
                     'transform':'translateY(17%)'}}
             className='left'>
-            <img onClick={this.handleImgClick.bind(this)}
-              src={JSON.parse(window.localStorage.profile).picture}
-            />
+            <a href={"https://twitter.com/" + JSON.parse(window.localStorage.profile).screen_name}>
+              <img
+                src={JSON.parse(window.localStorage.profile).picture}
+              />
+            </a>
           </div>
         </NavItem>
         <NavItem>
           <div className='left'>
-            {'Hi ' + JSON.parse(window.localStorage.profile).name}
+            <a href={"https://twitter.com/" + JSON.parse(window.localStorage.profile).screen_name}>
+              {'Hi ' + JSON.parse(window.localStorage.profile).name}
+            </a>
           </div>
         </NavItem>
 
@@ -105,8 +110,7 @@ class StatsNav extends React.Component{
         </NavItem>
 
         {this.props.spinner ? <NavItem><StatSpinner /></NavItem> : ''}
-        {this.props.error ? <NavItem>Invalid Twitter Handle</NavItem> : ''}
-      {/* form changes */}
+        {this.props.error ? <NavItem>{this.handleErrorMessage()}</NavItem> : ''}
 
         {this.state.selected === 'location' ?
           <NavItem>

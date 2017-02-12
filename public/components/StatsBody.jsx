@@ -11,7 +11,7 @@ class StatsBody extends React.Component {
     // console.log('StatsBody list: ',this.props.list);
   	return (
       <div className="statsbody">
-      	{this.props.list.map((user) => <StatsCard user={user} />) }
+      	{this.props.list.map((user,idx) => <StatsCard user={user} key={idx} />) }
       </div>
   	);
   }
