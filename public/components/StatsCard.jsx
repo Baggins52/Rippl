@@ -24,8 +24,8 @@ class StatsCard extends React.Component{
     //if the sentiment score is for a topic
     } else if (this.props.user.topic) {
       return this.props.user.location
-        ? capitalizer(this.props.user.topic) + ' ... Location:' + this.props.user.location
-        : capitalizer(this.props.user.topic);
+        ? '#' + capitalizer(this.props.user.topic) + ` (${this.props.user.location})`
+        : '#' + capitalizer(this.props.user.topic);
     }
   }
 
