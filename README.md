@@ -1,14 +1,17 @@
 # Rippl
+
+## A web application that renders sentiment analyses for user-inputted Twitter handles, locations, and topics within locations.
+
 ![Alt text](public/img/examplescreen.png)
-### getting started
+### Getting Started
 To get started, you will need some API keys to make everything work.  Please get API keys for the following:
 
 1. https://dev.twitter.com/
 2. https://www.havenondemand.com/
 
-Once you have API keys, please remove the .example from haven.example.js and twitter.example.js and add your API keys into these files.
+Once you have API keys, remove the .example from haven.example.js and twitter.example.js and add your API keys into these files.
 
-Once you have those two files setup, run npm install to get all the required packages.
+Once you have those two files setup, run `npm install` to install requisite packages.
 
 Create a MySQL database with: 
 ```javascript
@@ -29,20 +32,3 @@ Finally, run
 npm run twitterscript
 ```
 Once all these commands have been run, navigate to localhost:3000 to use the app.  From here, you are able to get a Rippl score for any twitter user.
-
-
-            React Component Tree:      index.jsx
-                      				    				|
-                      				  			  Stats
-                      				  			  	|
-                      		 StatsNav - StatsBody - StatsFoot
-                      			 	 |	       	|
-                      		StatSpinner		  |		
-                      				  		  		|
-                      					  	 	StatsCard
-                      					  	  		|
-                      					  		 StatsBox
-                      						  	    |
-                      						   StatSpinner
-
-React-Materialize components: Navbar, NavItem, Col, Row, Card, CardPanel, Input, Icon, Button, Preloader, Footer
